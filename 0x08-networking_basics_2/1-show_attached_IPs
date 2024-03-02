@@ -1,0 +1,5 @@
+#!/bin/bash
+# Get all active IPv4 IPs
+active_ips=$(ip addr | grep 'inet ' | awk '{print $2}' | cut -d'/' -f1)
+echo "$active_ips"
+
