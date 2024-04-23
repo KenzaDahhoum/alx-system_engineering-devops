@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Run netstat command to display listening ports and associated processes
+sudo netstat -lp
