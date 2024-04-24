@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# This file contains SSH client configuration
+
+# Specify configuration for the server
+Host 54.84.35.43
+    IdentityFile ~/.ssh/school
+    PreferredAuthentications publickey
+    PasswordAuthentication no
+
