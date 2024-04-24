@@ -1,15 +1,9 @@
 #!/usr/bin/env bash
 # Install nginx on web server; Nginx should be listening on port 80
 
-sudo apt-get -y update || { echo "Error: Failed to update package repositories"; exit 1;}
-sudo apt-get -y install nginx || { echo "Error: Failed to install nginx"; exit 1; }
-
-if command -v ufw >/dev/null; then
-    sudo ufw allow "Nginx HTTP" || { echo "Error: Failed to allow Nginx through the firewall"; exit 1; }
-else
-    echo "Warning: ufw command not found. Skipping firewall configuration"
-fi
-echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html >/dev/null || { echo "Error: Failed to write content to HTML file"; exit 1; }
-
-sudo service nginx restart || { echo "Error: Failed to restart nginx"; exit 1; }
-
+sudo apt-get -y update
+sudo apt-get -y install nginx
+sudo ufw allow "Nginx HTTP"
+sudo chown -R $USER:$USER /var/www/html/index.nginx-debian.html
+sudo echo "Hello World!" > /var/www/html/index.nginx-debian.html
+sudo service nginx restart
