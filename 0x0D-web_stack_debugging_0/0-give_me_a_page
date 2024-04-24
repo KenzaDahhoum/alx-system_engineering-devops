@@ -1,5 +1,5 @@
-#!/bin/bash
-# Start Apache service
-sudo service apache2 start
-echo "Hello Holberton" | sudo tee /var/www/html/index.html
+#!/usr/bin/env bash
+# apache 2
 
+sudo service apache2 start
+sudo echo "Hello Holberton" | /var/www/html/index.html
