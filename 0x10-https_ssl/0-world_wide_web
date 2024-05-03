@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # This script audits DNS records for a domain's subdomains.
-
 get_dns_record() {
     domain="$1"
     subdomain="$2"
@@ -15,7 +14,6 @@ main() {
     subdomain="$2"
     
     if [ -z "$subdomain" ]; then
-        # If subdomain is not provided, check default subdomains
         subdomains=("www" "lb-01" "web-01" "web-02")
         for sub in "${subdomains[@]}"; do
             get_dns_record "$domain" "$sub"
