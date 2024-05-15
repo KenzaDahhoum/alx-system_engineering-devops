@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+# Check if password argument is provided
+if [ $# -ne 1 ]; then
+    echo "Usage: $0 <mysql_password>"
+    exit 1
+fi
+
+# MySQL dump filename
+MYSQL_DUMP="backup.sql"
+
+# Compressed archive filename
+DATE=$(date +%d-%m-%Y)
+TAR_GZ_FILENAME="$DATE.tar.gz"
+
+# MySQL dump command
+mysqldump -u root -p"$1" --all-databases > $MYSQL_DUMP
+
+# Check if mysqldump command was successful
+if [ $? -ne 0 ]; then
+    echo "MySQL dump failed. Please check your password and try again."
+    exit 1
+fi
+
+# Create tar.gz archive
+tar -czvf $TAR_GZ_FILENAME $MYSQL_DUMP
+
+# Check if tar.gz archive creation was successful
+if [ $? -ne 0 ]; then
+    echo "Archive creation failed."
+    exit 1
+fi
+
+# Remove MySQL dump file
+rm $MYSQL_DUMP
+
+echo "Backup completed: $TAR_GZ_FILENAME"
+
