@@ -6,35 +6,29 @@ import requests
 import sys
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python3 2-export_to_JSON.py <employee_id>")
-        sys.exit(1)
+    userId = sys.argv[1]
 
-    user_id = sys.argv[1]
-    user_response = requests.get(f"https://jsonplaceholder.typicode.com/users/{user_id}")
-    if user_response.status_code != 200:
-        print("User not found")
-        sys.exit(1)
-
+    user_response = requests.get(f"https://jsonplaceholder.typicode.com/users/{userId}")
     user_data = user_response.json()
-    username = user_data.get('username')
 
     todos_response = requests.get('https://jsonplaceholder.typicode.com/todos')
-    todos_data = [todo for todo in todos_response.json() if todo.get('userId') == int(user_id)]
+    todos_data = todos_response.json()
 
-    json_data = {
-        user_id: [
-            {
+    todo_user = {}
+    task_list = []
+
+    for task in todos_data:
+        if task.get('userId') == int(userId):
+            task_dict = {
                 "task": task.get('title'),
                 "completed": task.get('completed'),
-                "username": username
-            } for task in todos_data
-        ]
-    }
+                "username": user_data.get('username')
+            }
+            task_list.append(task_dict)
 
-    filename = f"{user_id}.json"
+    todo_user[userId] = task_list
+
+    filename = f"{userId}.json"
     with open(filename, mode='w') as f:
-        json.dump(json_data, f)
-
-    print(f"Data exported to {filename}")
+        json.dump(todo_user, f)
 
