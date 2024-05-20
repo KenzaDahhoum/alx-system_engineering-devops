@@ -8,7 +8,6 @@ def fetch_employee_data(employee_id):
     user_url = f'{base_url}users/{employee_id}'
     todos_url = f'{base_url}todos?userId={employee_id}'
 
-    # Fetch user data
     user_response = requests.get(user_url)
     if user_response.status_code != 200:
         print("User not found")
@@ -17,7 +16,6 @@ def fetch_employee_data(employee_id):
     user_data = user_response.json()
     employee_name = user_data.get('name')
 
-    # Fetch TODO list data
     todos_response = requests.get(todos_url)
     todos_data = todos_response.json()
 
