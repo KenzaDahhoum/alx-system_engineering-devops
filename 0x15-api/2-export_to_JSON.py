@@ -22,7 +22,15 @@ if __name__ == "__main__":
     todos_response = requests.get('https://jsonplaceholder.typicode.com/todos')
     todos_data = [todo for todo in todos_response.json() if todo.get('userId') == int(user_id)]
 
-    json_data = {user_id: [{"task": task.get('title'), "completed": task.get('completed'), "username": username} for task in todos_data]}
+    json_data = {
+        user_id: [
+            {
+                "task": task.get('title'),
+                "completed": task.get('completed'),
+                "username": username
+            } for task in todos_data
+        ]
+    }
 
     filename = f"{user_id}.json"
     with open(filename, mode='w') as f:
